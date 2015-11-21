@@ -14,7 +14,10 @@ int main()
 	Chip8CPU* c8c = new Chip8CPU();
 
 	c8c->loadInterpreter();
-	c8c->loadROM();
+	cout << "Which ROM do you wish to load?" << endl;
+	char input[100];
+	cin.getline(input,sizeof(input));
+	c8c->loadROM(input);
 
 	/*
 	

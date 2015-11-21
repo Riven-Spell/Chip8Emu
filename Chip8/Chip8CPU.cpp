@@ -52,9 +52,32 @@ void Chip8CPU::loadInterpreter()
 	}
 }
 
-void Chip8CPU::loadROM()
+void Chip8CPU::loadROM(char input[])
 {
+	int i = 0;
+	string n = "";
+	while (i < sizeof(input))
+	{
+		n += input[i];
+		i++;
+	}
 
+	ifstream myfile;
+	myfile.open(n);
+	string o;
+	if (myfile.is_open())
+	{
+		int c = 512;
+		while (getline(myfile, o))
+		{
+			mem[c] = o.c_str()[0];
+			c++;
+		}
+	}
+	else
+	{
+		fprintf(stderr, "Couldn't read specified file. \n");
+	}
 }
 
 Chip8CPU::~Chip8CPU()

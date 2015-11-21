@@ -7,7 +7,7 @@ public:
 	~Chip8CPU();
 
 	void CPUCycle();
-	void loadROM();
+	void loadROM(char input[]);
 	void loadInterpreter();
 
 	unsigned char mem[4096];
