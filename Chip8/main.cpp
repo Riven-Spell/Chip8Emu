@@ -1,5 +1,6 @@
 //Chip-8 emulator
 //(C) Adele Lynn Reed
+//Done from scratch. Shoot me.
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
@@ -10,7 +11,10 @@ using namespace std;
 
 int main()
 {
+	Chip8CPU* c8c = new Chip8CPU();
 
+	c8c->loadInterpreter();
+	c8c->loadROM();
 
 	/*
 	
@@ -31,7 +35,7 @@ int main()
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 	//Open a window
-	GLFWwindow* window = glfwCreateWindow(640, 320, "", NULL, NULL);
+	GLFWwindow* window = glfwCreateWindow(640, 320, "Chip-8 Emulator", NULL, NULL);
 	
 	//Check if it initialized correctly
 	if (window == NULL)
@@ -64,14 +68,4 @@ int main()
 
 		//Rinse, repeat motherfucker.
 	}
-}
-
-void loadc8program(string file)
-{
-
-}
-
-void loadc8int()
-{
-
 }
