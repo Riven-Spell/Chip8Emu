@@ -35,27 +35,27 @@ void Chip8CPU::CPUCycle()
 
 	opcode = mem[pc];
 
-	bool input[4][4];
+	bool input[16];
 
-	input[0][0] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_1);
-	input[0][1] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_2);
-	input[0][2] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_3);
-	input[0][3] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_4);
+	input[0] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_1);
+	input[1] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_2);
+	input[2] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_3);
+	input[3] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_4);
 
-	input[1][0] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_Q);
-	input[1][1] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_W);
-	input[1][2] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_E);
-	input[1][3] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_R);
+	input[4] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_Q);
+	input[5] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_W);
+	input[6] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_E);
+	input[7] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_R);
 
-	input[1][0] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_A);
-	input[1][1] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_S);
-	input[1][2] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_D);
-	input[1][3] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_F);
+	input[8] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_A);
+	input[9] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_S);
+	input[10] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_D);
+	input[11] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_F);
 
-	input[1][0] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_Z);
-	input[1][1] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_X);
-	input[1][2] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_C);
-	input[1][3] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_V);
+	input[12] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_Z);
+	input[13] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_X);
+	input[14] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_C);
+	input[15] = glfwGetKey(glfwGetCurrentContext(), GLFW_KEY_V);
 
 	switch (opcode & 0xF000)
 	{
