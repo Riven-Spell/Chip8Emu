@@ -7,8 +7,12 @@ public:
 	~Chip8CPU();
 
 	void CPUCycle();
-	void loadROM(char input[]);
+	bool loadROM(char input[]);
 	void loadInterpreter();
+
+	int screen[64 * 32];
+
+	//Screen size 64x32
 
 	unsigned char mem[4096];
 	//Chip 8 memory:
@@ -27,6 +31,11 @@ public:
 	0xFFF end of RAM
 	*/
 
+	int delay = 0;
+	int sound = 0;
 
+	//Stack, stack pointer, program counter, index, opcode.
+
+	unsigned short stack[16], sp, pc, I, opcode;
 };
 

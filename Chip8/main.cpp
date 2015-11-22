@@ -17,7 +17,11 @@ int main()
 	cout << "Which ROM do you wish to load?" << endl;
 	char input[100];
 	cin.getline(input,sizeof(input));
-	c8c->loadROM(input);
+	if (!c8c->loadROM(input))
+	{
+		fprintf(stderr, "Unable to load ROM.");
+		return 0;
+	}
 
 	/*
 	
@@ -64,6 +68,7 @@ int main()
 	while (glfwGetKey(window, GLFW_KEY_ESCAPE) != GLFW_PRESS && !glfwWindowShouldClose(window))
 	{
 		//Draw shit.
+		c8c->CPUCycle();
 
 		//Swap buffers.
 		glfwSwapBuffers(window);
