@@ -70,8 +70,6 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\..\..\Desktop\Chip8 roms\INVADERS" />
-    <None Include="..\..\..\..\..\Desktop\Chip8 roms\TETRIS" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
