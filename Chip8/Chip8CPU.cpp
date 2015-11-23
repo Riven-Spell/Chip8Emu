@@ -6,6 +6,25 @@
 #include <GLFW\glfw3.h>
 using namespace std;
 
+/*
+
+
+MAJORLY IMPORTANT TO FIX WHEN YOU GET TO THIS AGAIN:
+
+TO CALL FROM AN ARRAY USING HEX,
+DO IT LIKE THIS:
+
+V[opcode & 0x0F00 >> 8 >> 8]
+
+EACH LETTER IN THE HEX CODE IS 4 BITS. >> SHIFTS RIGHT X BITS, << SHIFTS LEFT x BITS.
+
+BITWISE OPERATORS, BIOTCH.
+
+
+DOUBLE NOTE: FIX YOUR FUCKING ROM LOADER.
+IT LOADS THE FIRST CHAR EACH LINE, NOT EVERY CHAR ON EACH LINE. UNLIKE THE FONTSET, ROMS HAVE MULTIPLE INSTRUCTIONS.
+*/
+
 Chip8CPU::Chip8CPU()
 {
 	pc = 0x200;
@@ -90,52 +109,52 @@ void Chip8CPU::CPUCycle()
 		break;
 	case 0x3000:
 		//Skip next instruction if Vx = kk
-		if (V[opcode & 0x0F00] == opcode & 0x00FF)
+		if (V[opcode & 0x0F00 >> 8] == opcode & 0x00FF)
 		{
 			pc += 2;
 		}
 		break;
 	case 0x4000:
 		//Skip next if Vx != kk
-		if (V[opcode & 0x0F00] != opcode & 0x00FF)
+		if (V[opcode & 0x0F00 >> 8] != opcode & 0x00FF)
 		{
 			pc += 2;
 		}
 		break;
 	case 0x5000:
 		//skip next if Vx = Vy
-		if (V[opcode & 0x0F00] == V[opcode & 0x00F0])
+		if (V[opcode & 0x0F00 >> 8] == V[opcode & 0x00F0 >> 4])
 		{
 			pc += 2;
 		}
 		break;
 	case 0x6000:
 		//Set Vx to kk
-		V[opcode & 0x0F00] = opcode & 0x00FF;
+		V[opcode & 0x0F00 >> 8] = opcode & 0x00FF;
 		break;
 	case 0x7000:
 		//Set Vx to Vx + kk
-		V[opcode & 0x0F00] = mem[opcode & 0x0F00] + opcode & 0x00FF;
+		V[opcode & 0x0F00 >> 8] = mem[opcode & 0x0F00 >> 8] + opcode & 0x00FF;
 		break;
 	case 0x8000:
 		switch (opcode & 0x000F)
 		{
 		case 0x0000:
 			//set Vx to Vy
-			V[opcode & 0x0F00] = V[opcode & 0x00F0];
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x00F0 >> 4];
 			break;
 		case 0x0001:
-			V[opcode & 0x0F00] = V[opcode & 0x0F00] | V[opcode & 0x00F0];
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] | V[opcode & 0x00F0 >> 4];
 			break;
 		case 0x0002:
-			V[opcode & 0x0F00] = V[opcode & 0x0F00] & V[opcode & 0x00F0];
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] & V[opcode & 0x00F0 >> 4];
 			break;
 		case 0x0003:
-			V[opcode & 0x0F00] = V[opcode & 0x0F00] ^ V[opcode & 0x00F0];
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] ^ V[opcode & 0x00F0 >> 4];
 			break;
 		case 0x0004:
-			V[opcode & 0x0F00] = V[opcode & 0x0F00] + V[opcode & 0x00F0];
-			if (V[opcode & 0x0F00] + V[opcode & 0x00F0] > 256)
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] + V[opcode & 0x00F0 >> 4];
+			if (V[opcode & 0x0F00 >> 8] + V[opcode & 0x00F0 >> 4] > 256)
 			{
 				V[15] = 1;
 			}
