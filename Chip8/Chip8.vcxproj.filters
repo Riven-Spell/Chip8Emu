@@ -24,6 +24,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="..\..\..\..\..\Desktop\Chip8 roms\INVADERS">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\Desktop\Chip8 roms\TETRIS">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chip8CPU.h">
