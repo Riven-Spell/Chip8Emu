@@ -14,6 +14,7 @@ public:
 
 	//Screen size 64x32
 
+	unsigned char V[16];
 	unsigned char mem[4096];
 	//Chip 8 memory:
 	/*

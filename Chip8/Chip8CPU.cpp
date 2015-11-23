@@ -33,7 +33,7 @@ void Chip8CPU::CPUCycle()
 
 	*/
 
-	opcode = mem[pc];
+	opcode = mem[pc] << 8 | mem[pc+1];
 
 	bool input[16];
 
@@ -90,34 +90,55 @@ void Chip8CPU::CPUCycle()
 		break;
 	case 0x3000:
 		//Skip next instruction if Vx = kk
-		
+		if (V[opcode & 0x0F00] == opcode & 0x00FF)
+		{
+			pc += 2;
+		}
 		break;
 	case 0x4000:
 		//Skip next if Vx != kk
-		
+		if (V[opcode & 0x0F00] != opcode & 0x00FF)
+		{
+			pc += 2;
+		}
 		break;
 	case 0x5000:
 		//skip next if Vx = Vy
-		
+		if (V[opcode & 0x0F00] == V[opcode & 0x00F0])
+		{
+			pc += 2;
+		}
 		break;
 	case 0x6000:
 		//Set Vx to kk
-		mem[opcode & 0x0F] = opcode & 0x00FF;
+		V[opcode & 0x0F00] = opcode & 0x00FF;
 		break;
 	case 0x7000:
 		//Set Vx to Vx + kk
-		mem[opcode & 0x0F] = mem[opcode & 0x0f] + opcode & 0x00FF;
+		V[opcode & 0x0F00] = mem[opcode & 0x0F00] + opcode & 0x00FF;
 		break;
 	case 0x8000:
 		switch (opcode & 0x000F)
 		{
+		case 0x0000:
+			//set Vx to Vy
+			V[opcode & 0x0F00] = V[opcode & 0x00F0];
+			break;
 		case 0x0001:
+			V[opcode & 0x0F00] = V[opcode & 0x0F00] | V[opcode & 0x00F0];
 			break;
 		case 0x0002:
+			V[opcode & 0x0F00] = V[opcode & 0x0F00] & V[opcode & 0x00F0];
 			break;
 		case 0x0003:
+			V[opcode & 0x0F00] = V[opcode & 0x0F00] ^ V[opcode & 0x00F0];
 			break;
 		case 0x0004:
+			V[opcode & 0x0F00] = V[opcode & 0x0F00] + V[opcode & 0x00F0];
+			if (V[opcode & 0x0F00] + V[opcode & 0x00F0] > 256)
+			{
+				V[15] = 1;
+			}
 			break;
 		case 0x0005:
 			break;
@@ -174,7 +195,7 @@ void Chip8CPU::CPUCycle()
 		printf("Invalid opcode ", opcode);
 		break;
 	}
-	pc++;
+	pc += 2;
 }
 
 void Chip8CPU::loadInterpreter()
