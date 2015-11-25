@@ -4,6 +4,7 @@
 #include <string>
 #include <Windows.h>
 #include <GLFW\glfw3.h>
+#include <vector>
 using namespace std;
 
 /*
@@ -153,19 +154,33 @@ void Chip8CPU::CPUCycle()
 			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] ^ V[opcode & 0x00F0 >> 4];
 			break;
 		case 0x0004:
-			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] + V[opcode & 0x00F0 >> 4];
 			if (V[opcode & 0x0F00 >> 8] + V[opcode & 0x00F0 >> 4] > 256)
 			{
 				V[15] = 1;
 			}
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] + V[opcode & 0x00F0 >> 4];
 			break;
 		case 0x0005:
+			if (V[opcode & 0x0F00 >> 8] > V[opcode & 0x00F0 >> 4])
+			{
+				V[15] = 1;
+			}
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] - V[opcode & 0x00F0 >> 4];
 			break;
 		case 0x0006:
+			V[15] = V[opcode & 0x0F00 >> 8] & 0x1;
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x0F00 >> 8] / 2;
 			break;
 		case 0x0007:
+			if (V[opcode & 0x0F00 >> 8] < V[opcode & 0x00F0 >> 4])
+			{
+				V[15] = 1;
+			}
+			V[opcode & 0x0F00 >> 8] = V[opcode & 0x00F0 >> 4] - V[opcode & 0x0F00 >> 8];
 			break;
 		case 0x000E:
+			V[0xF] = V[(opcode & 0x0F00) >> 8] >> 7;
+			V[(opcode & 0x0F00) >> 8] = V[(opcode & 0x0F00) >> 8] / 2;
 			break;
 		}
 		break;
@@ -265,9 +280,12 @@ bool Chip8CPU::loadROM(char input[])
 		int c = 512;
 		while (getline(myfile, o))
 		{
-			//SHIIIT way to load-- fix this.
-			mem[c] = o.c_str()[0];
-			c++;
+			i = 0;
+			while (i < o.size())
+			{
+				mem[c] = o.c_str()[i];
+				c++;
+			}
 		}
 		return true;
 	}
