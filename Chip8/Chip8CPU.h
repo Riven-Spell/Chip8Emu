@@ -9,8 +9,9 @@ public:
 	void CPUCycle();
 	bool loadROM(char input[]);
 	void loadInterpreter();
+	
 
-	int screen[64 * 32];
+	unsigned char screen[64 * 32]; //should only ever be 0x0 or 0x1
 
 	//Screen size 64x32
 
@@ -34,6 +35,8 @@ public:
 
 	int delay = 0;
 	int sound = 0;
+	bool skipForFx0A = false;
+	unsigned char storeInFx0A;
 
 	//Stack, stack pointer, program counter, index, opcode.
 
